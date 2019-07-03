@@ -46,12 +46,12 @@ size_t input_char(size_t buf, char* str){
 	}
 
 	len = strlen(str);
-    if (str[len - 1] == '\n') str[--len] = '\0';
+  if (str[len - 1] == '\n') str[--len] = '\0';
 
-    return(len);
+  return(len);
 }
 
-void def_set(char* set){
+char* def_set(char* set){
 
 	size_t stnum, len;
 	int i, j, ext;
@@ -91,7 +91,7 @@ void def_set(char* set){
 		puts("The defined set is");
 		printf("{");
 		for(i = 0; i < stnum; i++){
-			for (int j = 0; j < stlen[i]; j++){
+			for (j = 0; j < stlen[i]; j++){
 				printf("%c", set[i * stlen[i] + j]);
 			}
 			if(i != stnum - 1) printf(",");
@@ -102,17 +102,26 @@ void def_set(char* set){
 		ext = input_int();
 		if(ext != 1) break;
 	}
+	return (set);
 }
 
 void def_fa(){
 
 	fa am;
+	int i = 0;
 
 	puts("**Define a finite automaton**");
 	puts("fa = (Q{}, S{}, δ, q0, F)");
-	puts("*Define a finite state*\n");
-	def_set(am.state);
+	puts("\n*Define a finite state*\n");
+	am.state = def_set(am.state);
 
+	printf("fa = (Q{");
+	while(am.state[i]) {
+		if(i != 0) printf(",");
+		printf("%c", am.state[i]);
+		i++;
+	}
+	printf("}, S{}, δ, q0, F)");
 }
 
 int main(void){
