@@ -105,9 +105,18 @@ char* def_set(char* set){
 	return (set);
 }
 
-void def_fa(){
+void print_set(char* set ) {
+	int i = 0;
 
-	fa am;
+	while(set[i]) {
+		if(i != 0) printf(",");
+		printf("%c", set[i]);
+		i++;
+	}
+}
+
+fa def_fa(fa am){
+
 	int i = 0;
 
 	puts("**Define a finite automaton**");
@@ -116,15 +125,21 @@ void def_fa(){
 	am.state = def_set(am.state);
 
 	printf("fa = (Q{");
-	while(am.state[i]) {
-		if(i != 0) printf(",");
-		printf("%c", am.state[i]);
-		i++;
-	}
-	printf("}, S{}, δ, q0, F)");
+	print_set(am.state);
+	puts("}, S{\n");
+
+	puts("\n*Define a finite symbol*\n");
+	am.symbol = def_set(am.symbol);
+
+	print_set(am.state);
+
+	printf("}, δ, q0, F)");
+
+	return (am);
 }
 
 int main(void){
-	def_fa();
+	fa am;
+	def_fa(am);
 	return(0);
 }
